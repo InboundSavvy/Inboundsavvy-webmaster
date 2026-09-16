@@ -3,7 +3,7 @@ set -e
 
 MCP_ENDPOINT="https://inboundsavvy.com/mcp"
 SKILL_DIR="$HOME/.claude/skills/inboundsavvy-webmaster"
-REPO_RAW="https://raw.githubusercontent.com/JesperJurcenoks/Inboundsavvy-webmaster/main"
+REPO_RAW="https://raw.githubusercontent.com/InboundSavvy/Inboundsavvy-webmaster/main"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SERVER_NAME=""
 PRIMARY_DOMAIN=""
