@@ -43,14 +43,14 @@ Log in to your InboundSavvy CMS → **select the website you want to work on** �
 **Step 3 — Run the installer inside that folder**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/JesperJurcenoks/Inboundsavvy-webmaster/main/install.sh | bash -s -- --domain acmestudio.com
+curl -fsSL https://raw.githubusercontent.com/InboundSavvy/Inboundsavvy-webmaster/main/install.sh | bash -s -- --domain acmestudio.com
 ```
 
 The installer prompts for your token (hidden input), writes `.mcp.json` in the current directory using a domain-based MCP server name such as `inboundsavvy_acmestudio.com`, adds `.mcp.json` to `.gitignore`, and installs the skill at `~/.claude/skills/inboundsavvy-webmaster/`.
 
 Or run from a local clone instead:
 ```bash
-git clone https://github.com/JesperJurcenoks/Inboundsavvy-webmaster
+git clone https://github.com/InboundSavvy/Inboundsavvy-webmaster
 cd my-website
 bash /path/to/Inboundsavvy-webmaster/install.sh
 ```
