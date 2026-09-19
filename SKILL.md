@@ -757,28 +757,24 @@ reproducible.
 
 **Do not work around it, and do not design around the assumption that the
 component cannot do this.** The exclusion exists and is fully implemented -
-including series-aware "the ones after this, then the ones before" ordering. It
-is wired end to end and then dropped on the last hop:
+including series-aware "the ones after this, then the ones before" ordering.
+`EntriesListComponent.astro` reads the current entry from `Astro.params.entry`;
+when that is null, the exclusion is skipped entirely and the list falls back to
+"everything, including yourself." The root cause is why it comes back null on
+an affected site, not a missing schema field - see `workflow-automation#97` for
+the live investigation and cite it rather than restating a diagnosis here,
+since the diagnosis has already changed once (an earlier theory blamed a
+missing `id` on the entry schema; that was retracted after reading the
+renderer source). Open candidates as of that issue: the article route not
+setting the `entry` param (served by a catch-all page instead of
+`[entry].astro`), an older renderer predating the exclusion, or an `id` string
+mismatch (e.g. one side carrying a `.json` extension).
 
-- the layout has the collection entry in scope and passes only its validated
-  `data` down to the segment renderer
-- the segment renderer asks that object for an `id` to use as the current entry
-- the entry schema declares nine fields - title, description, collaborator,
-  publicationDate, coverImage, status, tags, order, series - and **no `id`**, so
-  the validator strips it and the renderer always reads `undefined`
-- the fetcher's exclusion is therefore handed `null` every time and never fires
-
-So this is one wiring line away from working, on every site at once. **File it
-against the layout** - the fix is to thread the collection entry's own id (the
-one the fetcher compares against, derived from the filename) down to the
-renderer. Note that adding `id` to the entry schema does **not** fix it: that
-would be an author-supplied field in the JSON, and it would match the collection
-entry id only by coincidence.
-
-Until the platform fix lands, if a customer needs the footer list now, generate
-it from primitives in whatever script writes the entries - but treat that as
-temporary scaffolding with an issue number attached, not as the way this is done.
-A workaround written into every site is how a one-line bug becomes permanent.
+**File it against the layout/routing, not the schema.** Until the platform fix
+lands, if a customer needs the footer list now, generate it from primitives in
+whatever script writes the entries - but treat that as temporary scaffolding
+with an issue number attached, not as the way this is done. A workaround
+written into every site is how a one-line bug becomes permanent.
 
 #### `entries-list` filter keys must be omitted, not blanked
 
